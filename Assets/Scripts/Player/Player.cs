@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _health;
+    [SerializeField] private float _maxHealth;
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Transform _shootPoint;
 
@@ -13,10 +14,12 @@ public class Player : MonoBehaviour
     private float _currentHealth;
     private Animator _animator;
 
+    public int Money { get; private set; }
+
     private void Start()
     {
         _currentWeapon = _weapons[0];
-        _currentHealth = _health;
+        _currentHealth = _maxHealth;
         _animator = GetComponent<Animator>();
     }
     
@@ -26,5 +29,20 @@ public class Player : MonoBehaviour
         {
             _weapons[0].Shoot(_shootPoint);
         }
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        _currentHealth -= damage;
+        
+        if (_currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnEnemyDied(int reward)
+    {
+        Money += reward;
     }
 }
