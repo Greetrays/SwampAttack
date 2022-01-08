@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
+    [SerializeField] private int _maxHealth;
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Transform _shootPoint;
 
     private Weapon _currentWeapon;
-    private float _currentHealth;
+    private int _currentHealth;
     private Animator _animator;
-
+    
     public int Money { get; private set; }
+
+    public UnityAction<int, int> ChangedHealth;
 
     private void Start()
     {
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
     public void ApplyDamage(int damage)
     {
         _currentHealth -= damage;
+        ChangedHealth?.Invoke(_currentHealth, _maxHealth);
         
         if (_currentHealth <= 0)
         {
@@ -41,8 +45,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnEnemyDied(int reward)
+    public void AddMoney(int money)
     {
-        Money += reward;
+        Money += money;
     }
 }
