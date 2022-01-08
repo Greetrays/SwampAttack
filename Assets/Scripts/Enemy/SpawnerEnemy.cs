@@ -50,7 +50,6 @@ public class SpawnerEnemy : MonoBehaviour
 
     public void OnEnemyDying(Enemy enemy)
     {
-        Debug.Log(1);
         _target.AddMoney(enemy.Reward);
         enemy.Dying -= OnEnemyDying;
     }
