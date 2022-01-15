@@ -33,7 +33,10 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _weapons[0].Shoot(_shootPoint);
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
+            _weapons[_currentWeaponNumber].Shoot(_shootPoint, mouseRay.origin);
+            Debug.Log(mouseRay.origin);
         }
     }
 
