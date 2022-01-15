@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
     public event UnityAction<int, int> ChangedHealth;
     public event UnityAction<int> ChangedMoney;
+    public event UnityAction<Weapon> ChangedWeapon;
 
     private void Start()
     {
@@ -34,9 +35,8 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
+          
             _weapons[_currentWeaponNumber].Shoot(_shootPoint, mouseRay.origin);
-            Debug.Log(mouseRay.origin);
         }
     }
 
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     {
         if (_currentWeaponNumber == 0)
         {
-            _currentWeaponNumber = 1;
+            _currentWeaponNumber = _weapons.Count - 1;
         }
         else
         {
@@ -95,5 +95,6 @@ public class Player : MonoBehaviour
     private void ChangeWeapon(Weapon weapon)
     {
         _currentWeapon = weapon;
+        ChangedWeapon(weapon);
     }
 }
