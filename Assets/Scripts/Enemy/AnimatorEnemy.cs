@@ -9,5 +9,6 @@
     {
         public const string Attack = nameof(Attack);
         public const string Celebration = nameof(Celebration);
+        public const string Run = nameof(Run);
     }
 }
